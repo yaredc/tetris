@@ -1,0 +1,11 @@
+{
+  "name": "zvidakovic/tetris",
+  "require": {
+    "php": "~7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tetris\\": "src/"
+    }
+  }
+}

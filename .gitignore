@@ -1,0 +1,6 @@
+.idea/
+.git/
+vendor/
+nbproject/
+build/
+composer.phar
