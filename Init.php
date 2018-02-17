@@ -8,8 +8,8 @@ define('APP_NAME', 'Tetris');
 define('APP_SLUG', 'tetris');
 define('APP_VERSION_MAJOR', 1);
 define('APP_VERSION_MINOR', 0);
-define('APP_COLUMNS', exec('tput cols'));
-define('APP_LINES', exec('tput lines'));
+define('APP_COLUMNS', (int)exec('tput cols'));
+define('APP_LINES', (int)exec('tput lines'));
 
 /*
  * Adjust some console settings:
