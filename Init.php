@@ -6,9 +6,9 @@
 define('APP_LOG', __DIR__ . 'log' . DIRECTORY_SEPARATOR . date('Y-m-d-H-i-s') . '.log');
 define('APP_NAME', 'Tetris');
 define('APP_SLUG', 'tetris');
-define('APP_VARSION_MAJOR', 1);
-define('APP_VARSION_MINOR', 0);
-define('APP_SOLUMNS', exec('tput cols'));
+define('APP_VERSION_MAJOR', 1);
+define('APP_VERSION_MINOR', 0);
+define('APP_COLUMNS', exec('tput cols'));
 define('APP_LINES', exec('tput lines'));
 
 /*

@@ -5,27 +5,11 @@ namespace Tetris;
 class Screen
 {
     /**
-     * @var int Width of the screen.
+     * @var int Width of the playing screen.
      */
-    private $width = 10;
+    public $width = 10;
     /**
-     * @var int Height of the screen.
+     * @var int Height of the playing screen.
      */
-    private $height = 24;
-
-    /**
-     * @return int
-     */
-    public function getWidth(): int
-    {
-        return $this->width;
-    }
-
-    /**
-     * @return int
-     */
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
+    public $height = 24;
 }
