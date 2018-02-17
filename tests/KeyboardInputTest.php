@@ -12,8 +12,10 @@ TEXT;
 while (true) {
     $key = '';
     if (readStream($key)) {
-        echo chr(13);
-        echo "Key pressed is \"{$key}\", ASCII value is: " . ord($key) . chr(127);
-        echo chr(8);
+        if (ord($key) !== 10) {
+            echo chr(13); //CARRIAGE RETURN
+            echo str_pad("Key pressed is \"$key\", ASCII value is: " . ord($key), APP_SOLUMNS, ' ');
+            echo chr(8); //BACKSPACE
+        }
     }
 }
