@@ -10,6 +10,8 @@ define('APP_VERSION_MAJOR', 1);
 define('APP_VERSION_MINOR', 0);
 define('APP_COLUMNS', (int)exec('tput cols'));
 define('APP_LINES', (int)exec('tput lines'));
+define('APP_SCREEN_COLUMNS', 10);
+define('APP_SCREEN_LINES', 24);
 
 /*
  * Adjust some console settings:
@@ -30,7 +32,6 @@ function readStream(&$value): bool
     $except = [];
     $numberOfChangedStreams = stream_select($read, $write, $except, 0);
     if ($numberOfChangedStreams === false) {
-        error('Could not detect number of changed streams.');
         return false;
     }
     if ($numberOfChangedStreams > 0) {
@@ -42,32 +43,21 @@ function readStream(&$value): bool
     return false;
 }
 
+/**
+ * Tries to clear the whole screen. No matter what.
+ * http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x361.html
+ */
 function clearScreen()
 {
-    echo "\033[2J\033[;H";
-}
-
-/**
- * @param string $message Message to log.
- * @param string $type Type of message to log.
- */
-function logToFile($message, $type = 'INFO')
-{
-    file_put_contents(APP_LOG, date('Y-m-d H:i:s') . " [$type] $message" . PHP_EOL);
-}
-
-/**
- * @param string $message
- */
-function info($message)
-{
-    logToFile($message, 'INFO');
-}
-
-/**
- * @param string $message
- */
-function error($message)
-{
-    logToFile($message, 'ERROR');
+    for ($i = 0; $i < APP_LINES; $i++) {
+        /*
+         * \r      RETURN TO BEGINNING OF LINE
+         * \033[K  ERASE TO THE END OF LINE
+         * \033[1A MOVE UP ONE LINE
+         * \r      RETURN TO BEGINNING OF LINE
+         * \033[K  ERASE TO THE END OF LINE
+         * \r      RETURN TO BEGINNING OF LINE
+         */
+        echo "\r\033[K\033[1A\r\033[K\r";
+    }
 }
