@@ -1,7 +1,9 @@
 {
   "name": "zvidakovic/tetris",
+  "license": "MIT",
   "require": {
-    "php": "~7"
+    "php": "~7",
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {

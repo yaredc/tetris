@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="zvidakovic/tetris" default="build:prod" basedir=".">
+    <target name="get-composer">
+        <exec command="wget -q https://getcomposer.org/composer.phar -O composer.phar"/>
+    </target>
+
+    <target name="build:dev">
+        <phingcall target="get-composer"/>
+        <composer command="install"/>
+    </target>
+
+    <target name="build:prod">
+        <phingcall target="get-composer"/>
+        <composer command="install">
+            <arg value="--no-dev"/>
+            <arg value="--classmap-authoritative"/>
+        </composer>
+    </target>
+</project>

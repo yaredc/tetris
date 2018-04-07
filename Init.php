@@ -27,20 +27,20 @@ exec('stty -icanon min 0 time 0');
  */
 function readStream(&$value): bool
 {
-    $read = [STDIN];
-    $write = [];
-    $except = [];
-    $numberOfChangedStreams = stream_select($read, $write, $except, 0);
-    if ($numberOfChangedStreams === false) {
-        return false;
-    }
-    if ($numberOfChangedStreams > 0) {
-        $value = stream_get_line(STDIN, 1);
-        if (strlen($value) > 0) {
-            return true;
-        }
-    }
-    return false;
+	$read = [STDIN];
+	$write = [];
+	$except = [];
+	$numberOfChangedStreams = stream_select($read, $write, $except, 0);
+	if ($numberOfChangedStreams === false) {
+		return false;
+	}
+	if ($numberOfChangedStreams > 0) {
+		$value = stream_get_line(STDIN, 1);
+		if (strlen($value) > 0) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
@@ -49,15 +49,32 @@ function readStream(&$value): bool
  */
 function clearScreen()
 {
-    for ($i = 0; $i < APP_LINES; $i++) {
-        /*
-         * \r      RETURN TO BEGINNING OF LINE
-         * \033[K  ERASE TO THE END OF LINE
-         * \033[1A MOVE UP ONE LINE
-         * \r      RETURN TO BEGINNING OF LINE
-         * \033[K  ERASE TO THE END OF LINE
-         * \r      RETURN TO BEGINNING OF LINE
-         */
-        echo "\r\033[K\033[1A\r\033[K\r";
-    }
+	for ($i = 0; $i < APP_LINES; $i++) {
+		/*
+		 * \r      RETURN TO BEGINNING OF LINE
+		 * \033[K  ERASE TO THE END OF LINE
+		 * \033[1A MOVE UP ONE LINE
+		 * \r      RETURN TO BEGINNING OF LINE
+		 * \033[K  ERASE TO THE END OF LINE
+		 * \r      RETURN TO BEGINNING OF LINE
+		 */
+		echo "\r\033[K\033[1A\r\033[K\r";
+	}
+}
+
+/**
+ * Get nicely formatted memory usage.
+ * @param bool $realUsage
+ * @return string
+ */
+function getMemoryUsage($realUsage = false): string
+{
+	$memory = memory_get_usage($realUsage);
+	if ($memory < 1024) {
+		return $memory . 'B';
+	}
+	if ($memory < 1048576) {
+		return round($memory / 1024, 2) . 'kB';
+	}
+	return round($memory / 1048576, 2) . 'mB';
 }

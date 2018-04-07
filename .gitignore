@@ -4,3 +4,6 @@ vendor/
 nbproject/
 build/
 composer.phar
+composer-latest.phar
+phing.phar
+phing-latest.phar
