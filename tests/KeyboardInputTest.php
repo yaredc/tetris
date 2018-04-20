@@ -10,12 +10,10 @@ To exit, press Ctrl + C.
 TEXT;
 
 while (true) {
-	$key = '';
-	if (readStream($key)) {
-		if (ord($key) !== 10) {
-			echo chr(13); //CARRIAGE RETURN
-			echo str_pad("Key pressed is \"$key\", ASCII value is: " . ord($key), APP_COLUMNS, ' ');
-			echo chr(8); //BACKSPACE
-		}
-	}
+    $key = '';
+    if (readStream($key) && ord($key) !== 10) {
+        echo chr(13); //CARRIAGE RETURN
+        echo str_pad("Key pressed is \"$key\", ASCII value is: " . ord($key), APP_COLUMNS, ' ');
+        echo chr(8); //BACKSPACE
+    }
 }

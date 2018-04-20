@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * GLOBAL VARIABLES
@@ -10,8 +10,10 @@ define('APP_VERSION_MAJOR', 1);
 define('APP_VERSION_MINOR', 0);
 define('APP_COLUMNS', (int)exec('tput cols'));
 define('APP_LINES', (int)exec('tput lines'));
-define('APP_SCREEN_COLUMNS', 10);
-define('APP_SCREEN_LINES', 24);
+define('APP_PLAYING_SCREEN_COLUMNS', 10);
+define('APP_PLAYING_SCREEN_LINES', 24);
+define('APP_VERTICAL_WALL', '|');
+define('APP_HORIZONTAL_WALL', '─');
 
 /*
  * Adjust some console settings:
@@ -27,39 +29,39 @@ exec('stty -icanon min 0 time 0');
  */
 function readStream(&$value): bool
 {
-	$read = [STDIN];
-	$write = [];
-	$except = [];
-	$numberOfChangedStreams = stream_select($read, $write, $except, 0);
-	if ($numberOfChangedStreams === false) {
-		return false;
-	}
-	if ($numberOfChangedStreams > 0) {
-		$value = stream_get_line(STDIN, 1);
-		if (strlen($value) > 0) {
-			return true;
-		}
-	}
-	return false;
+    $read = [STDIN];
+    $write = [];
+    $except = [];
+    $numberOfChangedStreams = stream_select($read, $write, $except, 0);
+    if ($numberOfChangedStreams === false) {
+        return false;
+    }
+    if ($numberOfChangedStreams > 0) {
+        $value = stream_get_line(STDIN, 1);
+        if (strlen($value) > 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
  * Tries to clear the whole screen. No matter what.
  * http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x361.html
  */
-function clearScreen()
+function clearScreen(): void
 {
-	for ($i = 0; $i < APP_LINES; $i++) {
-		/*
-		 * \r      RETURN TO BEGINNING OF LINE
-		 * \033[K  ERASE TO THE END OF LINE
-		 * \033[1A MOVE UP ONE LINE
-		 * \r      RETURN TO BEGINNING OF LINE
-		 * \033[K  ERASE TO THE END OF LINE
-		 * \r      RETURN TO BEGINNING OF LINE
-		 */
-		echo "\r\033[K\033[1A\r\033[K\r";
-	}
+    for ($i = 0; $i < APP_LINES; $i++) {
+        /*
+         * \r      RETURN TO BEGINNING OF LINE
+         * \033[K  ERASE TO THE END OF LINE
+         * \033[1A MOVE UP ONE LINE
+         * \r      RETURN TO BEGINNING OF LINE
+         * \033[K  ERASE TO THE END OF LINE
+         * \r      RETURN TO BEGINNING OF LINE
+         */
+        echo "\r\033[K\033[1A\r\033[K\r";
+    }
 }
 
 /**
@@ -69,12 +71,12 @@ function clearScreen()
  */
 function getMemoryUsage($realUsage = false): string
 {
-	$memory = memory_get_usage($realUsage);
-	if ($memory < 1024) {
-		return $memory . 'B';
-	}
-	if ($memory < 1048576) {
-		return round($memory / 1024, 2) . 'kB';
-	}
-	return round($memory / 1048576, 2) . 'mB';
+    $memory = memory_get_usage($realUsage);
+    if ($memory < 1024) {
+        return $memory . 'B';
+    }
+    if ($memory < 1048576) {
+        return round($memory / 1024, 2) . 'kB';
+    }
+    return round($memory / 1048576, 2) . 'MB';
 }
