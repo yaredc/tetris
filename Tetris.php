@@ -16,6 +16,7 @@ while (true) {
     readStream($input);
     $s->playerMoveActiveTetromino(ord($input));
     $s->dropActiveTetromino();
+    $s->recalculateAll();
     $s->redrawPlayingScreen();
     $s->showInfo();
     usleep(100000);

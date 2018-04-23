@@ -10,7 +10,7 @@ final class Tetromino
      * @param int $type
      * @throws Exception
      */
-    public function __construct($type = self::TYPE_I)
+    public function __construct(int $type = self::TYPE_I)
     {
         $this->type = $type;
         $this->points = self::$types[$this->type];
@@ -104,7 +104,7 @@ final class Tetromino
     /**
      * @param int $places
      */
-    public function moveLeft($places = 1): void
+    public function moveLeft(int $places = 1): void
     {
         foreach ($this->points as &$row) {
             foreach ($row as &$point) {
@@ -116,7 +116,7 @@ final class Tetromino
     /**
      * @param int $places
      */
-    public function moveRight($places = 1): void
+    public function moveRight(int $places = 1): void
     {
         foreach ($this->points as &$row) {
             foreach ($row as &$point) {
@@ -128,7 +128,7 @@ final class Tetromino
     /**
      * @param int $places
      */
-    public function moveDown($places = 1): void
+    public function moveDown(int $places = 1): void
     {
         foreach ($this->points as &$row) {
             foreach ($row as &$point) {
@@ -140,12 +140,23 @@ final class Tetromino
     /**
      * @param int $places
      */
-    public function moveUp($places = 1): void
+    public function moveUp(int $places = 1): void
     {
         foreach ($this->points as &$row) {
             foreach ($row as &$point) {
                 $point[1] -= $places;
             }
         }
+    }
+
+    public function rotateClockwise(): void
+    {
+        $rotated = [];
+        for ($i = 0; $i < $this->width; $i++) {
+            for ($j = 0; $j < $this->height; $j++) {
+                $this->points[$i][$j];
+            }
+        }
+        $this->points = $rotated;
     }
 }

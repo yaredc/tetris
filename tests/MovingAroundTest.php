@@ -24,6 +24,9 @@ while (true) {
         case 100: //d
             $t->moveRight();
             break;
+        case 32: //SPACE
+            $t->rotateClockwise();
+            break;
     }
     for ($sy = 0; $sy < APP_PLAYING_SCREEN_LINES; $sy++) {
         for ($sx = 0; $sx < APP_PLAYING_SCREEN_COLUMNS; $sx++) {

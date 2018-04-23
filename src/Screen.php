@@ -12,6 +12,19 @@ final class Screen
      * @var int Index of Tetromino that is currently controlled by user.
      */
     private $activeTetromino = 0;
+    /**
+     * @var int Number of lines cleared.
+     */
+    private $score = 0;
+
+    public function recalculateAll(): void
+    {
+        /*
+         * Check if current active Tetromino is at the bottom.
+         * If yes, merge it and add a new one.
+         */
+
+    }
 
     /**
      * Loop through all Tetrominos and redraw them in playing screen.
@@ -43,7 +56,7 @@ final class Screen
      * Drop currently active Tetromino.
      * @param int $places
      */
-    public function dropActiveTetromino($places = 1): void
+    public function dropActiveTetromino(int $places = 1): void
     {
         if (!empty($this->tetrominos[$this->activeTetromino])) {
             $this->tetrominos[$this->activeTetromino]->moveDown($places);
@@ -54,7 +67,7 @@ final class Screen
      * @param int $key
      * @param int $places
      */
-    public function playerMoveActiveTetromino(int $key, $places = 1): void
+    public function playerMoveActiveTetromino(int $key, int $places = 1): void
     {
         if (!empty($this->tetrominos[$this->activeTetromino])) {
             switch ($key) {
@@ -69,6 +82,14 @@ final class Screen
                     break;
             }
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore(): int
+    {
+        return $this->score;
     }
 
     /**
