@@ -81,6 +81,10 @@ final class Tetromino
      * @var int
      */
     private $type;
+    /**
+     * @var bool
+     */
+    public $onTheGround = false;
 
     /**
      * @return int
@@ -158,5 +162,16 @@ final class Tetromino
             }
         }
         $this->points = $rotated;
+    }
+
+    public function checkIfOnGround(): bool
+    {
+        foreach ($this->points as &$row) {
+            foreach ($row as &$point) {
+                if ($point[1] = APP_) {
+                }
+            }
+        }
+        return true;
     }
 }

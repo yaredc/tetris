@@ -37,7 +37,7 @@ function readStream(string &$value = null): bool
     }
     if ($numberOfChangedStreams > 0) {
         $value = stream_get_line(STDIN, 1);
-        if (strlen($value) > 0) {
+        if (mb_strlen($value) > 0) {
             return true;
         }
     }
@@ -50,17 +50,45 @@ function readStream(string &$value = null): bool
  */
 function clearScreen(): void
 {
-    for ($i = 0; $i < APP_LINES; $i++) {
-        /*
-         * \r      RETURN TO BEGINNING OF LINE
-         * \033[K  ERASE TO THE END OF LINE
-         * \033[1A MOVE UP ONE LINE
-         * \r      RETURN TO BEGINNING OF LINE
-         * \033[K  ERASE TO THE END OF LINE
-         * \r      RETURN TO BEGINNING OF LINE
-         */
-        echo "\r\033[K\033[1A\r\033[K\r";
+    if (!defined('CLEAR_SCREEN_STRING')) {
+        $cls = '';
+        for ($i = 0; $i < APP_LINES; $i++) {
+            /*
+             * \r      RETURN TO BEGINNING OF LINE
+             * \033[K  ERASE TO THE END OF LINE
+             * \033[1A MOVE UP ONE LINE
+             * \r      RETURN TO BEGINNING OF LINE
+             * \033[K  ERASE TO THE END OF LINE
+             * \r      RETURN TO BEGINNING OF LINE
+             */
+            $cls .= "\r\033[K\033[1A\r\033[K\r";
+        }
+        define('CLEAR_SCREEN_STRING', $cls);
     }
+    echo CLEAR_SCREEN_STRING;
+}
+
+/**
+ * Tries to reset pointer to top left corner. No matter what.
+ */
+function resetPointer(): void
+{
+    if (!defined('RESET_POINTER_STRING')) {
+        $rps = '';
+        for ($i = 0; $i < APP_LINES; $i++) {
+            /*
+             * \r      RETURN TO BEGINNING OF LINE
+             * \033[K  ERASE TO THE END OF LINE
+             * \033[1A MOVE UP ONE LINE
+             * \r      RETURN TO BEGINNING OF LINE
+             * \033[K  ERASE TO THE END OF LINE
+             * \r      RETURN TO BEGINNING OF LINE
+             */
+            $rps .= "\r\033[1A";
+        }
+        define('RESET_POINTER_STRING', $rps);
+    }
+    echo RESET_POINTER_STRING;
 }
 
 /**
